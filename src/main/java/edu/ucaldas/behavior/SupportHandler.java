@@ -1,15 +1,50 @@
 package edu.ucaldas.behavior;
 
-// TODO: Implementa el patrón Chain of Responsibility.
-// Crea tres manejadores concretos:
-// 1. BasicSupportHandler → maneja solicitudes "básicas"
-// 2. SupervisorHandler → maneja solicitudes "intermedias"
-// 3. ManagerHandler → maneja solicitudes "avanzadas"
-// Si no puede manejar, debe pasar al siguiente en la cadena.
-
+// Patrón Chain of Responsibility - Pasa solicitudes por una cadena de manejadores
 public class SupportHandler {
+    
+    // Crea la cadena: Básico → Supervisor → Gerente
     public static Handler createChain() {
-        // TODO: crea la cadena: Basic → Supervisor → Manager
-        return null;
+        Handler basic = new BasicSupportHandler();
+        Handler supervisor = new SupervisorHandler();
+        Handler manager = new ManagerHandler();
+        
+        basic.setNext(supervisor);
+        supervisor.setNext(manager);
+        
+        return basic;
+    }
+}
+
+// Soporte básico
+class BasicSupportHandler extends Handler {
+    @Override
+    public String handleRequest(String request) {
+        if ("básica".equals(request)) {
+            return "Atendido por Soporte Básico";
+        }
+        return next != null ? next.handleRequest(request) : "No se puede atender la solicitud.";
+    }
+}
+
+// Supervisor
+class SupervisorHandler extends Handler {
+    @Override
+    public String handleRequest(String request) {
+        if ("intermedia".equals(request)) {
+            return "Atendido por Supervisor";
+        }
+        return next != null ? next.handleRequest(request) : "No se puede atender la solicitud.";
+    }
+}
+
+// Gerente
+class ManagerHandler extends Handler {
+    @Override
+    public String handleRequest(String request) {
+        if ("avanzada".equals(request)) {
+            return "Atendido por Gerente";
+        }
+        return "No se puede atender la solicitud.";
     }
 }

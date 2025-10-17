@@ -1,18 +1,28 @@
 package edu.ucaldas.creational;
 
-// TODO: Implementa el patrón Factory Method.
-// Crea un método createShape(String type) que devuelva:
-// "Circle" → new Circle()
-// "Square" → new Square()
-// Si el tipo no existe, retorna null.
-
+// Patrón Factory Method - Crea objetos sin especificar su clase exacta
 public class ShapeFactory {
+    
+    // Crea una figura según el tipo
     public Shape createShape(String type) {
-        // TODO: completa la lógica de creación
+        if ("Circle".equals(type)) return new Circle();
+        if ("Square".equals(type)) return new Square();
         return null;
     }
 }
 
-// TODO: Implementa las clases Circle y Square
-// Circle → "Dibujando un círculo."
-// Square → "Dibujando un cuadrado."
+// Círculo
+class Circle implements Shape {
+    @Override
+    public String draw() {
+        return "Dibujando un círculo.";
+    }
+}
+
+// Cuadrado
+class Square implements Shape {
+    @Override
+    public String draw() {
+        return "Dibujando un cuadrado.";
+    }
+}
